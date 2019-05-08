@@ -72,26 +72,26 @@ Page({
                 //生成真实图片
                 ctx.draw(true, function(){
                   wx.canvasToTempFilePath({
-                    x: 0,
-                    y: 0,
-                    width: that.data.screenWidth,
-                    height: that.data.canvasHeight,
-                    destWidth: that.data.screenWidth * 2,
-                    destHeight: that.data.canvasHeight * 2,
-                    canvasId: 'share',
-                    quality: 1,
-                    success: function (res) {
+                  x: 0,
+                  y: 0,
+                  width: that.data.screenWidth,
+                  height: that.data.canvasHeight,
+                  destWidth: that.data.screenWidth * 2,
+                  destHeight: that.data.canvasHeight * 2,
+                  canvasId: 'share',
+                  quality: 1,
+                  success: function (res) {
 
-                      let shareImg = res.tempFilePath;
-                      that.setData({
-                        shareImg: shareImg,
-                        showModal: true,
-                        showShareModal: false
-                      })
-                    },
-                    fail: function (res) {
-                    }
-                  })
+                    let shareImg = res.tempFilePath;
+                    that.setData({
+                      shareImg: shareImg,
+                      showModal: true,
+                      showShareModal: false
+                    })
+                  },
+                  fail: function (res) {
+                  }
+                })
                 });
 
                 
@@ -106,6 +106,10 @@ Page({
   //生成图片
   createImage(){
     var that = this;
+    wx.showToast({
+      title: '正在保存...',
+      icon: 'none'
+    })
     wx.saveImageToPhotosAlbum({
       filePath: that.data.shareImg,
       success() {
