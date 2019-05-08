@@ -1,0 +1,12 @@
+<button class='getUserInfo' wx:if="{{!hidden}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">获取电子奖牌</button>
+
+<view wx:if="{{hidden}}">
+  <canvas class='canvas' canvas-id="share" style='width:100%; height:{{canvasHeight}}px' ></canvas>
+
+  <cover-view class='btn-box'>
+    <button open-type='share' class='btn1'>转 发</button>
+    <button bindtap='createImage' class='btn2'>保存图片</button>
+  </cover-view>
+</view>
+<image src='{{shareImg}}'></image>
+
