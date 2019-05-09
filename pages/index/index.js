@@ -62,6 +62,7 @@ Page({
                 });
                 // 画图开始
                 ctx.drawImage(that.data.fileUrl, 0, 0, that.data.screenWidth, that.data.canvasHeight);
+                ctx.save();
                 // 绘制圆形头像
                 var avatarurl_width = 200 * that.data.screenWidth / res2.width;    //绘制的头像宽度
                 var avatarurl_heigth = 200 * that.data.screenWidth / res2.width;   //绘制的头像高度
@@ -155,7 +156,7 @@ Page({
     var that = this;
     wx.showModal({
       title: '提示',
-      content: '打开新页面长按图片发送给朋友',
+      content: '点击确定后，长按图片发送给朋友',
       showCancel:false,
       success(res) {
         if (res.confirm) {
