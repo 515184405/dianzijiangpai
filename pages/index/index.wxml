@@ -3,10 +3,11 @@
 <view wx:if="{{hidden}}">
   <canvas class='canvas' canvas-id="share" style='width:100%; height:{{canvasHeight}}px' ></canvas>
 
-  <cover-view class='btn-box'>
-    <button open-type='share' class='btn1'>转 发</button>
-    <button bindtap='createImage' class='btn2'>保存图片</button>
+
+<cover-view wx:if="{{hidden}}" class='btn-box'>
+    <!-- <button open-type='share' class='btn1'>发送给朋友</button> -->
+    <button bindtap='previewImage' class='btn1'>发送给朋友</button>
+    
+    <button disabled='{{disabled}}' loading="{{loading}}" bindtap='createImage' class='btn2'>{{text}}</button>
   </cover-view>
 </view>
-<image src='{{shareImg}}'></image>
-

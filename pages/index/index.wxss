@@ -1,12 +1,12 @@
 .getUserInfo{
-  height:300rpx;
-  width:300rpx;
+  height:350rpx;
+  width:350rpx;
   color:#fff;
-  background-color: #f00;
-  border-radius: 150rpx;
+  background-color: rgba(14,23,54,1);
+  border-radius: 175rpx;
   display: block;
   margin:50% auto;
-  line-height: 300rpx;
+  line-height: 350rpx;
 }
 .btn-box{
   position: fixed;
@@ -18,6 +18,9 @@
   display: flex;
   justify-content: space-between;
   z-index: 999;
+}
+.shareImg{
+  width:100%;
 }
 .btn-box button{
   width:300rpx;

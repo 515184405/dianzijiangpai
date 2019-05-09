@@ -5,6 +5,10 @@ Page({
     hidden : false,
     screenWidth:'',
     canvasHeight : '',
+    disabled:false,
+    loading:false,
+    text:'保存图片',
+    shareImg:''
   },
   onLoad() {
     var that = this;
@@ -71,31 +75,30 @@ Page({
 
                 //生成真实图片
                 ctx.draw(true, function(){
-                  wx.canvasToTempFilePath({
-                  x: 0,
-                  y: 0,
-                  width: that.data.screenWidth,
-                  height: that.data.canvasHeight,
-                  destWidth: that.data.screenWidth * 2,
-                  destHeight: that.data.canvasHeight * 2,
-                  canvasId: 'share',
-                  quality: 1,
-                  success: function (res) {
+                  setTimeout(() => {
+                    wx.canvasToTempFilePath({
+                      x: 0,
+                      y: 0,
+                      width: that.data.screenWidth,
+                      height: that.data.canvasHeight,
+                      destWidth: that.data.screenWidth * 2,
+                      destHeight: that.data.canvasHeight * 2,
+                      canvasId: 'share',
+                      quality: 1,
+                      success: function (res) {
 
-                    let shareImg = res.tempFilePath;
-                    that.setData({
-                      shareImg: shareImg,
-                      showModal: true,
-                      showShareModal: false
+                        let shareImg = res.tempFilePath;
+                        that.setData({
+                          shareImg: shareImg,
+                          showModal: true,
+                          showShareModal: false
+                        })
+                      },
+                      fail: function (res) {
+                      }
                     })
-                  },
-                  fail: function (res) {
-                  }
-                })
+                  },500)
                 });
-
-                
-
               }
             });
           }
@@ -110,20 +113,34 @@ Page({
       title: '正在保存...',
       icon: 'none'
     })
-    wx.saveImageToPhotosAlbum({
-      filePath: that.data.shareImg,
-      success() {
-        wx.showToast({
-          title: '保存成功'
-        })
-      },
-      fail() {
-        wx.showToast({
-          title: '保存失败',
-          icon: 'none'
-        })
-      }
+    that.setData({
+      disabled: true,
+      loading: true,
+      text:'下载中'
     })
+    setTimeout(() => {
+      wx.saveImageToPhotosAlbum({
+        filePath: that.data.shareImg,
+        success() {
+          wx.showModal({
+            title: '提示',
+            content: '图片保存成功，快去发个朋友圈吧',
+            showCancel: false,
+          })
+          that.setData({
+            disabled: false,
+            loading: false,
+            text: '保存图片'
+          })
+        },
+        fail() {
+          wx.showToast({
+            title: '保存失败',
+            icon: 'none'
+          })
+        }
+      })
+    },800)
   },
   bindGetUserInfo(e) {
     this.setData({
@@ -133,9 +150,33 @@ Page({
     this.drawCanvas();
     console.log(this.data.avatarUrl)
   },
+  //长安转发
+  previewImage: function (e) {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '打开新页面长按图片发送给朋友',
+      showCancel:false,
+      success(res) {
+        if (res.confirm) {
+          wx.previewImage({
+            current: that.data.shareImg, // 当前显示图片的http链接   
+            urls: [that.data.shareImg], // 需要预览的图片http链接列表   
+            success: function (res) {
+            }
+          })
+        }
+      }
+    })
+    
+  },
+
   /**
   * 生命周期函数--监听页面初次渲染完成
   */
   onReady: function () {
   },
+  onShow:function(){
+   
+  }
 })
