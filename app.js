@@ -34,6 +34,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    AppSecret:'4a076ab9aa19ac5d8cb2b5f0a87b9dda'
   }
 })
